@@ -1,4 +1,5 @@
 ---
+name: research-crawl-email
 description: Batched Gmail crawl from N sender addresses across N-day window; per-sender markdown to caller dir; rolled-up + per-source summary.
 ---
 

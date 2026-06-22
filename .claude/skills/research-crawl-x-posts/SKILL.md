@@ -1,4 +1,5 @@
 ---
+name: research-crawl-x-posts
 description: Batched X/Twitter post crawl from N handles via Apify search mode, with inline X Article body enrichment via a chained second actor; per-handle markdown + rolled-up summary to caller dir.
 ---
 

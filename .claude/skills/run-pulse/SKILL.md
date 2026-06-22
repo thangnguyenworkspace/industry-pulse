@@ -1,4 +1,5 @@
 ---
+name: run-pulse
 description: Watchlist-driven intelligence pipeline — crawl LinkedIn/X/RSS/email via composed leaves, classify and domain-tag in parallel sub-agents, then synthesize one neutral signals brief. The brief is the public core; your relevance + delivery layer attaches at the seam.
 ---
 

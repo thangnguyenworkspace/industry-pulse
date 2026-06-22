@@ -4,7 +4,7 @@
 
 The core does the hard, reusable part: turn a curated source list into a dense, cited, domain-organized brief of what happened and why it matters. It deliberately stops there, at a neutral artifact anyone could read. What makes the output *yours* — scoring it against your portfolio, your company, your projects, then routing or delivering it — is a small layer you own, and the repo ships two worked examples of it.
 
-Built as a set of [Claude Code](https://claude.com/claude-code) skills (markdown command files under `.claude/commands/`). You run it by opening the repo in an agent and invoking `/run-pulse`.
+Built as a set of [Claude Code](https://claude.com/claude-code) [Agent Skills](https://code.claude.com/docs/en/skills) — each a `SKILL.md` folder under `.claude/skills/`. You run it by opening the repo in an agent and invoking `/run-pulse`.
 
 ## The pipeline
 
@@ -73,7 +73,7 @@ Then open the repo in Claude Code and run:
 
 The brief lands in `output/reports/pulse-report-<date>/`. Full setup, including the MCP servers, is in [docs/setup.md](docs/setup.md).
 
-> **Configure it with your agent.** You do not have to wire the paths by hand. Open the repo in Claude Code and ask: *"Read `.claude/commands/run-pulse.md` and its Global References, then help me set up my profile, watchlists, and MCP servers."* The skills are written to be read top to bottom, every path and decision explicit, so an agent can onboard you from the files alone.
+> **Configure it with your agent.** You do not have to wire the paths by hand. Open the repo in Claude Code and ask: *"Read `.claude/skills/run-pulse/SKILL.md` and its Global References, then help me set up my profile, watchlists, and MCP servers."* The skills are written to be read top to bottom, every path and decision explicit, so an agent can onboard you from the files alone.
 
 ## The relevance seam
 

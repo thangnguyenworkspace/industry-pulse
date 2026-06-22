@@ -1,4 +1,5 @@
 ---
+name: research-crawl-linkedin-posts
 description: Batched LinkedIn post crawl from N URLs via Apify; per-source markdown to caller dir; rolled-up + per-source summary.
 ---
 

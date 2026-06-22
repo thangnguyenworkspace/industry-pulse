@@ -4,7 +4,7 @@ From a clean clone to a first brief. Most of this is one-time.
 
 ## Prerequisites
 
-- **[Claude Code](https://claude.com/claude-code)** (or another agent harness that runs `.claude/commands/` skills and supports MCP). You drive the pipeline by invoking `/run-pulse` inside it.
+- **[Claude Code](https://claude.com/claude-code)** (or another agent harness that runs `.claude/skills/` Agent Skills and supports MCP). You drive the pipeline by invoking `/run-pulse` inside it.
 - **Node.js** — only to run the Apify MCP server via `npx` (the LinkedIn + X lanes). Skip if you run neither paid lane.
 - **Python 3** with **`feedparser`** — only for the RSS lane: `pip install feedparser`. Skip if you run no RSS.
 - **An Apify account + API token** — for LinkedIn + X. Get one at <https://console.apify.com/account/integrations>. Skip if you run neither.
@@ -44,7 +44,7 @@ Edit each `config/watchlists/{lane}-watchlist.md`. Replace the illustrative rows
 - **RSS** — raw feed URLs, each tagged deep-content or news-firehose (this drives the auto-scaler).
 - **Email** — sender addresses you already receive newsletters from.
 
-> You do not have to do steps 2 and 3 by hand. Open the repo in Claude Code and ask the agent to read `run-pulse.md` and help you build your profile and watchlists. The skills are written to be onboarded from.
+> You do not have to do steps 2 and 3 by hand. Open the repo in Claude Code and ask the agent to read `.claude/skills/run-pulse/SKILL.md` and help you build your profile and watchlists. The skills are written to be onboarded from.
 
 ## 4. First run
 
@@ -76,4 +76,4 @@ Useful flags (all optional, all have defaults):
 - **"Apify MCP not connected"** — the namespace check failed before spending. Confirm `.mcp.json` loaded and `APIFY_TOKEN` is set, then re-run.
 - **Email lane dropped** — the Gmail MCP was absent. Reconnect it at the approval gate, or proceed without email.
 - **RSS feed failed** — usually a JS-challenge-gated feed or a transient network error. Remove the feed or retry. Store feed URLs in their 308-normalized (no-trailing-slash) form where the host redirects.
-- **Want to keep briefs in git** — repoint `REPORTS_DIR` (in `run-pulse.md` Global References) outside `output/`, or adjust `.gitignore`.
+- **Want to keep briefs in git** — repoint `REPORTS_DIR` (in `.claude/skills/run-pulse/SKILL.md` Global References) outside `output/`, or adjust `.gitignore`.
