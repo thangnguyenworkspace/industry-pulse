@@ -21,16 +21,16 @@ Curated list of LinkedIn profiles, companies, and channels whose new posts the P
 
 ### 2.1 Authority
 
-- `practitioner` — deep individual expertise; voice of one person.
-- `executive` — leader of a recognized organization.
-- `institutional` — systemic gravity beyond a single company.
+- `practitioner`, deep individual expertise; voice of one person.
+- `executive`, leader of a recognized organization.
+- `institutional`, systemic gravity beyond a single company.
 
 Synthesis weight gradient: `institutional > executive > practitioner`. Pick the value that fits the source's actual reach, independent of personal affection.
 
 ### 2.2 Specialty
 
 - One sentence, ~12 words target. Focus area + perspective.
-- Skip biography, role title, employer — Entity Type and URL already carry those.
+- Skip biography, role title, employer, Entity Type and URL already carry those.
 
 ### 2.3 Entry Discipline
 
@@ -56,4 +56,4 @@ Synthesis weight gradient: `institutional > executive > practitioner`. Pick the 
 |---|------|-------------|-----|-----------|-----------|-------|
 | 1 | a16z | Company | https://www.linkedin.com/company/a16z/ | Multi-stage venture firm; broad content engine on tech, AI, and startups | institutional | Example org entry |
 | 2 | OpenAI | Company | https://www.linkedin.com/company/openai/ | Frontier AI lab; product and research announcements | institutional | Example org entry |
-| 3 | Example Practitioner | Individual | https://www.linkedin.com/in/your-handle-here/ | Replace with an individual whose posts you want to track | practitioner | Placeholder — swap in a real profile |
+| 3 | Example Practitioner | Individual | https://www.linkedin.com/in/your-handle-here/ | Replace with an individual whose posts you want to track | practitioner | Placeholder, swap in a real profile |

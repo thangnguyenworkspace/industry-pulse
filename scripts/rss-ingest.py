@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""rss-ingest.py — feedparser engine for the /research-crawl-rss leaf.
+"""rss-ingest.py: feedparser engine for the /research-crawl-rss leaf.
 
 Pure primitive: fetch N RSS/Atom/RDF feeds, apply per-feed maxItems cap + recency window,
 write one markdown file per feed, and emit a JSON manifest (per-feed counts + token estimates)
@@ -26,9 +26,9 @@ import calendar
 import feedparser
 
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
-      "(KHTML, like Gecko) Chrome/124.0 Safari/537.36")  # P4: load-bearing default — do not strip
+      "(KHTML, like Gecko) Chrome/124.0 Safari/537.36")  # load-bearing default; do not strip
 
-# Cloudflare / WAF challenge markers (P4)
+# Cloudflare / WAF challenge markers
 JS_CHALLENGE_MARKERS = ("just a moment", "challenges.cloudflare.com", "cf-browser-verification",
                         "_cf_chl_opt", "enable javascript and cookies to continue")
 WAF_DENY_MARKERS = ("access denied", "you have been blocked", "attention required")
@@ -43,7 +43,7 @@ class _Stripper(HTMLParser):
         return "".join(self.parts)
 
 def strip_html(s):
-    """P2: tags → gone, entities → unescaped, whitespace collapsed. Tolerant of malformed HTML."""
+    """tags → gone, entities → unescaped, whitespace collapsed. Tolerant of malformed HTML."""
     if not s:
         return ""
     try:
@@ -58,7 +58,7 @@ def slugify(s):
     return "".join(c if c.isalnum() else "-" for c in s.lower()).strip("-")[:50] or "feed"
 
 def boundary_trunc(text, limit):
-    """P5: cut on a sentence/paragraph boundary at or before limit (fallback: hard cut)."""
+    """cut on a sentence/paragraph boundary at or before limit (fallback: hard cut)."""
     if len(text) <= limit:
         return text
     window = text[:limit]
@@ -92,7 +92,7 @@ def fetch(url, ua, timeout=30):
         return 0, b"", "", f"{type(e).__name__}: {e}"
 
 def classify_gate(status, data):
-    """P4: distinguish UA-solvable WAF deny from unsolvable JS challenge."""
+    """distinguish UA-solvable WAF deny from unsolvable JS challenge."""
     low = data[:4000].decode("utf-8", "ignore").lower() if data else ""
     if any(m in low for m in JS_CHALLENGE_MARKERS):
         return "gated:cloudflare-js-challenge"
@@ -107,7 +107,7 @@ def entry_dt(e):
     return None
 
 def entry_content(e):
-    """P7: return (text, source) — content:encoded/atom content if present, else summary/description."""
+    """return (text, source); content:encoded/atom content if present, else summary/description."""
     if e.get("content"):
         vals = [c.get("value", "") for c in e["content"] if c.get("value")]
         if vals:
@@ -123,24 +123,24 @@ def process_feed(name, url, domain, days, max_items, max_body, ua, out_dir, now)
            "body_sources": {}, "est_tokens": 0, "latest_item": None,
            "no_date_items": 0, "items_dropped_dateless": 0, "error": err, "out_file": None}
 
-    gate = classify_gate(status, data)                       # P4
+    gate = classify_gate(status, data)
     if gate:
         rec["gated"] = gate
         rec["error"] = rec["error"] or gate
         return rec
     if err:
         return rec
-    if not data or len(data) < 40:                           # P3: empty/near-empty 200
+    if not data or len(data) < 40:                           # empty/near-empty 200
         rec["error"] = f"empty body (HTTP {status})"
         return rec
 
     fp = feedparser.parse(data)
     rec["feed_type"] = fp.get("version") or None
-    rec["bozo"] = bool(fp.bozo)                              # P3: surface bozo regardless of entries
+    rec["bozo"] = bool(fp.bozo)                              # surface bozo regardless of entries
     if fp.bozo:
         rec["bozo_exception"] = str(getattr(fp, "bozo_exception", ""))[:200]
     if not fp.entries:
-        # P3: distinguish non-feed HTML from a genuinely empty feed
+        # distinguish non-feed HTML from a genuinely empty feed
         if ctype and "html" in ctype:
             rec["error"] = f"not a feed (got {ctype})"
         elif fp.bozo:
@@ -159,16 +159,16 @@ def process_feed(name, url, domain, days, max_items, max_body, ua, out_dir, now)
     rec["no_date_items"] = len(undated)
     pool = sorted(in_window, key=lambda x: x[0], reverse=True)
     if not pool and undated:
-        pool = undated                                       # P8: dateless fallback (feed order; documented)
+        pool = undated                                       # dateless fallback (feed order; documented)
     elif in_window and undated:
-        rec["items_dropped_dateless"] = len(undated)         # P8: surface silently-dropped undated items
-    pool = pool[:max_items]                                  # D1 cap
+        rec["items_dropped_dateless"] = len(undated)         # surface silently-dropped undated items
+    pool = pool[:max_items]                                  # per-feed cap
     rec["items_emitted"] = len(pool)
     all_dt = [dt for dt, _ in enriched if dt]
     if all_dt:
         rec["latest_item"] = max(all_dt).isoformat()
 
-    if not pool:                                             # P6: no empty-shell md
+    if not pool:                                             # no empty-shell md
         rec["error"] = rec["error"] or "no items in window"
         return rec
 
@@ -181,8 +181,8 @@ def process_feed(name, url, domain, days, max_items, max_body, ua, out_dir, now)
              f"window_days:{days} cap:{max_items} max_body:{max_body} -->", ""]
     for dt, e in pool:
         raw, src = entry_content(e)
-        rec["body_sources"][src] = rec["body_sources"].get(src, 0) + 1   # P7
-        body = boundary_trunc(strip_html(raw), max_body)     # P2 strip BEFORE P5 truncation
+        rec["body_sources"][src] = rec["body_sources"].get(src, 0) + 1
+        body = boundary_trunc(strip_html(raw), max_body)     # strip HTML before truncation
         if len(body) > 1500:
             rec["full_items"] += 1
         block = [f"## {e.get('title','(no title)')}",
@@ -192,11 +192,11 @@ def process_feed(name, url, domain, days, max_items, max_body, ua, out_dir, now)
             block.append(f"- author: {e.get('author')}")
         block += ["", body if body else "(no body content)", ""]
         lines += block
-        payload_chars += sum(len(x) for x in block)          # P1: tally EMITTED payload incl. metadata
+        payload_chars += sum(len(x) for x in block)          # tally EMITTED payload incl. metadata
     with open(path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
     rec["out_file"] = path
-    rec["est_tokens"] = int(payload_chars / 4)               # P1: post-strip/post-truncation, full payload
+    rec["est_tokens"] = int(payload_chars / 4)               # post-strip/post-truncation, full payload
     return rec
 
 def main():
@@ -205,7 +205,7 @@ def main():
     ap.add_argument("--url"); ap.add_argument("--name", default="feed"); ap.add_argument("--domain", default="")
     ap.add_argument("--days", type=int, default=1)
     ap.add_argument("--max-items", type=int, default=15)
-    ap.add_argument("--max-body-chars", type=int, default=8000)   # P5
+    ap.add_argument("--max-body-chars", type=int, default=8000)
     ap.add_argument("--out-dir", default="./rss-out")
     ap.add_argument("--user-agent", default=UA)
     args = ap.parse_args()

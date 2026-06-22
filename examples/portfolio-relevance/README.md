@@ -1,9 +1,9 @@
 # Portfolio relevance (inline pattern)
 
-Score a Pulse brief against a stock portfolio in a single pass. One context, so no fan-out — read the brief plus the portfolio and write the take directly. This is the simplest shape a relevance layer takes.
+Score a Pulse brief against a stock portfolio in a single pass. One context, so no fan-out: read the brief plus the portfolio and write the take directly. This is the simplest shape a relevance layer takes.
 
-- **IN** — the brief at `output/reports/pulse-report-<date>/pulse-report-<date>.md` + [`portfolio.example.md`](portfolio.example.md).
-- **OUT** — `output/relevance/portfolio-<date>.md`, one relevance item per affected holding plus a suggested action.
+- **IN**: the brief at `output/reports/pulse-report-<date>/pulse-report-<date>.md` + [`portfolio.example.md`](portfolio.example.md).
+- **OUT**: `output/relevance/portfolio-<date>.md`, one relevance item per affected holding plus a suggested action.
 
 ## Run it
 
@@ -15,7 +15,7 @@ Read these two files:
   - examples/portfolio-relevance/portfolio.example.md           (the portfolio)
 
 For each holding, decide whether anything in the brief changes, confirms, or
-threatens its thesis. Skip holdings with no relevant signal — silence is fine.
+threatens its thesis. Skip holdings with no relevant signal, silence is fine.
 
 Write output/relevance/portfolio-<date>.md:
 
@@ -23,7 +23,7 @@ Write output/relevance/portfolio-<date>.md:
 
   ## 1.0 Relevance Items
   - **<holding>: <what the signal means for this thesis>.** <second-order
-    implication — what it changes, not just what happened>. <the move it implies
+    implication, what it changes, not just what happened>. <the move it implies
     or the risk to watch>. <source> · <permalink>
 
   ## 2.0 Suggested Action

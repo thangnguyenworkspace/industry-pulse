@@ -21,16 +21,16 @@ Curated list of X/Twitter accounts whose recent posts the Pulse pipeline monitor
 
 ### 2.1 Authority
 
-- `practitioner` — deep individual expertise; voice of one person.
-- `executive` — leader of a recognized organization.
-- `institutional` — systemic gravity beyond a single company.
+- `practitioner`, deep individual expertise; voice of one person.
+- `executive`, leader of a recognized organization.
+- `institutional`, systemic gravity beyond a single company.
 
 Synthesis weight gradient: `institutional > executive > practitioner`. Pick the value that fits the source's actual reach, independent of personal affection.
 
 ### 2.2 Specialty
 
 - One sentence, ~12 words target. Focus area + perspective.
-- Skip biography, role title, employer — Entity Type and URL already carry those.
+- Skip biography, role title, employer, Entity Type and URL already carry those.
 
 ### 2.3 Entry Discipline
 
@@ -56,4 +56,4 @@ Synthesis weight gradient: `institutional > executive > practitioner`. Pick the 
 |---|------|-------------|-----|-----------|-----------|-------|
 | 1 | Anthropic | Organization | https://x.com/AnthropicAI | AI safety lab; Claude model family research and releases | institutional | Example org entry |
 | 2 | OpenAI | Organization | https://x.com/OpenAI | Frontier AI lab; product and research announcements | institutional | Example org entry |
-| 3 | Example Builder | Individual | https://x.com/your_handle_here | Replace with an individual whose posts you want to track | practitioner | Placeholder — swap in a real handle |
+| 3 | Example Builder | Individual | https://x.com/your_handle_here | Replace with an individual whose posts you want to track | practitioner | Placeholder, swap in a real handle |

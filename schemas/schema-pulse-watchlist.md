@@ -2,8 +2,8 @@
 type: Schema Definition
 id: pulse-watchlist
 version: 1.0
-description: Anatomy of Pulse watchlist files — three-section body (Purpose / Rules and Conventions / Watchlist Entries), seven-column entry table, source-type-driven variation rules.
-governs: Pulse watchlist files at config/watchlists/{source-type}-watchlist.md — curated, manually maintained lists of sources monitored by run-pulse. Ship as .example templates; copy to the working filename to activate.
+description: Anatomy of Pulse watchlist files, three-section body (Purpose / Rules and Conventions / Watchlist Entries), seven-column entry table, source-type-driven variation rules.
+governs: Pulse watchlist files at config/watchlists/{source-type}-watchlist.md, curated, manually maintained lists of sources monitored by run-pulse. Ship as .example templates; copy to the working filename to activate.
 applies_to: "config/watchlists/*-watchlist.md"
 ---
 
@@ -13,15 +13,15 @@ applies_to: "config/watchlists/*-watchlist.md"
 
 | Field | Type | Required | Default | Constraint |
 |-------|------|----------|---------|------------|
-| type | String | Yes | — | Always `Pulse Watchlist` |
-| schema | String | Yes | — | Always `pulse-watchlist` |
-| created | Date | Yes | — | YYYY-MM-DD |
-| updated | Date | Yes | — | YYYY-MM-DD — updated on every edit |
+| type | String | Yes |n/a | Always `Pulse Watchlist` |
+| schema | String | Yes |n/a | Always `pulse-watchlist` |
+| created | Date | Yes |n/a | YYYY-MM-DD |
+| updated | Date | Yes |n/a | YYYY-MM-DD, updated on every edit |
 | tags | List | Yes | [] | Minimum `[pulse, watchlist]` plus the source type tag (e.g., `linkedin`, `email`) |
 | alias | List | Yes | [] | Alternative names |
 | version | Number | Yes | 1.0 | Incremented on substantive changes to entries or shape |
-| description | String | Yes | — | One-line summary of the watchlist's purpose |
-| source_type | Enum | Yes | — | One of {LinkedIn, Email, X, RSS} per §3.2 Source Type |
+| description | String | Yes |n/a | One-line summary of the watchlist's purpose |
+| source_type | Enum | Yes |n/a | One of {LinkedIn, Email, X, RSS} per §3.2 Source Type |
 | total_entries | Number | Yes | 0 | Count of rows in §3.0 Watchlist Entries; updated on add/remove |
 
 ## 2.0 Markdown Schema
@@ -52,16 +52,16 @@ total_entries: <integer>
 
 ### 2.1 Authority
 
-- `practitioner` — deep individual expertise; voice of one person.
-- `executive` — leader of a recognized organization.
-- `institutional` — systemic gravity beyond a single company.
+- `practitioner`, deep individual expertise; voice of one person.
+- `executive`, leader of a recognized organization.
+- `institutional`, systemic gravity beyond a single company.
 
 Synthesis weight gradient: `institutional > executive > practitioner`. Pick the value that fits the source's actual reach, independent of personal affection.
 
 ### 2.2 Specialty
 
 - One sentence, ~12 words target. Focus area + perspective.
-- Skip biography, role title, employer — Entity Type and URL already carry those.
+- Skip biography, role title, employer, Entity Type and URL already carry those.
 
 ### 2.3 Entry Discipline
 
@@ -83,7 +83,7 @@ Synthesis weight gradient: `institutional > executive > practitioner`. Pick the 
 
 | # | Name | Entity Type | URL | Specialty | Authority | Notes |
 |---|------|-------------|-----|-----------|-----------|-------|
-| 1 | <entry name> | <per §3.3 Entity Type> | <per source_type — see §3.2> | <≤1 sentence per §2.2> | <practitioner \| executive \| institutional> | <free-text annotation or `—`> |
+| 1 | <entry name> | <per §3.3 Entity Type> | <per source_type, see §3.2> | <≤1 sentence per §2.2> | <practitioner \| executive \| institutional> | <free-text annotation or blank> |
 ````
 
 ## 3.0 Field Definitions
@@ -92,9 +92,9 @@ Synthesis weight gradient: `institutional > executive > practitioner`. Pick the 
 
 | Field | Type | Required | Placeholder | Update Rule | Notes |
 |-------|------|----------|-------------|-------------|-------|
-| H1 Title | Heading | Yes | — | replace | Exactly one H1 line, format `# <Source Type> Watchlist`. |
+| H1 Title | Heading | Yes |n/a | replace | Exactly one H1 line, format `# <Source Type> Watchlist`. |
 | §1.0 Purpose | Markdown prose | Yes | `Purpose pending.` | replace | 2-3 sentences. What this watchlist tracks + consumer + curation discipline. |
-| §2.0 Rules and Conventions | Sub-sectioned prose | Yes | — | replace | §2.1-§2.4 byte-identical across watchlists for consistency. §2.5 carries optional source-type rules. |
+| §2.0 Rules and Conventions | Sub-sectioned prose | Yes |n/a | replace | §2.1-§2.4 byte-identical across watchlists for consistency. §2.5 carries optional source-type rules. |
 | §3.0 Watchlist Entries | Table | Yes | `(No entries yet.)` | additive-subtractive | Seven-column shape fixed across all source types. Column values vary per `source_type` per §3.2. Row count tracked by frontmatter `total_entries`. |
 
 ### 3.2 Source Type
@@ -126,7 +126,7 @@ Synthesis weight gradient: `institutional > executive > practitioner`. Pick the 
 | Deep-Content Feed | Low-frequency, high-token full-content or show-notes feed; one dispatch bin. | RSS |
 | News-Firehose Feed | High-churn, low-token headline/excerpt feed; volume-sharded dispatch bin. | RSS |
 
-For `source_type: RSS`, the Entity Type value carries the feed's dispatch class — read by run-pulse's volume auto-scaler to bin feeds — rather than an entity kind. The two feed classes load on different axes: deep-content is low-count / high-token, news-firehose is high-count / low-token.
+For `source_type: RSS`, the Entity Type value carries the feed's dispatch class, read by run-pulse's volume auto-scaler to bin feeds, rather than an entity kind. The two feed classes load on different axes: deep-content is low-count / high-token, news-firehose is high-count / low-token.
 
 ### 3.4 Authority
 
@@ -173,4 +173,4 @@ The seven-column entry table shape stays fixed; only value semantics vary per so
 ### 4.5 Other Notes
 
 - Four source types ship: LinkedIn + X (via Apify), Email (via Gmail MCP), RSS (via Python feedparser, no MCP). The seven-column entry table is shared across all four; only column-value semantics vary per `source_type` (§3.2). For RSS, the Entity Type column carries the feed's dispatch class, which run-pulse's volume auto-scaler reads to bin feeds.
-- Watchlist files are read-only at run time — run-pulse never writes back. The user curates; the composer consumes.
+- Watchlist files are read-only at run time, run-pulse never writes back. The user curates; the composer consumes.

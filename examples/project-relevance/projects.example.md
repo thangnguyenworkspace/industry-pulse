@@ -1,6 +1,6 @@
 # Projects (example)
 
-A set of illustrative projects used as context objects, one block each. Replace them with your own — active projects, products, a startup thesis, research threads. The relevance pass fans out one sub-agent per block, so add or remove blocks freely.
+A set of illustrative projects used as context objects, one block each. Replace them with your own, active projects, products, a startup thesis, research threads. The relevance pass fans out one sub-agent per block, so add or remove blocks freely.
 
 Each block gives the agent enough to judge relevance: what the project is, what stage it is at, and what kinds of signal would actually matter to it.
 

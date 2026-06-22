@@ -1,9 +1,9 @@
 # Project relevance (sub-agent-per-context pattern)
 
-Score a Pulse brief against several projects at once, one sub-agent per project, in parallel. Each agent reads the brief plus one project block in its own isolated window and returns that project's take. This is the pattern to reach for whenever you have more than a couple of contexts — it keeps the per-context reading out of your orchestrating thread, the same lever the core pipeline uses.
+Score a Pulse brief against several projects at once, one sub-agent per project, in parallel. Each agent reads the brief plus one project block in its own isolated window and returns that project's take. This is the pattern to reach for whenever you have more than a couple of contexts. It keeps the per-context reading out of your orchestrating thread, the same lever the core pipeline uses.
 
-- **IN** — the brief at `output/reports/pulse-report-<date>/pulse-report-<date>.md` + [`projects.example.md`](projects.example.md) (one block per project).
-- **OUT** — `output/relevance/<project-slug>-<date>.md` per *relevant* project. A project with no relevant signal writes no file and just reports "not relevant."
+- **IN**: the brief at `output/reports/pulse-report-<date>/pulse-report-<date>.md` + [`projects.example.md`](projects.example.md) (one block per project).
+- **OUT**: `output/relevance/<project-slug>-<date>.md` per *relevant* project. A project with no relevant signal writes no file and just reports "not relevant."
 
 ## Run it
 
@@ -47,7 +47,7 @@ Orchestrator summary:
 ```
 acme-agent-platform     relevant     output/relevance/acme-agent-platform-2026-06-22.md
 northwind-gtm-service    relevant     output/relevance/northwind-gtm-service-2026-06-22.md
-sidebet-research         not relevant —
+sidebet-research         not relevant
 ```
 
 One relevance file (`acme-agent-platform-2026-06-22.md`):
@@ -64,4 +64,4 @@ One relevance file (`acme-agent-platform-2026-06-22.md`):
 
 ## Make it yours
 
-Replace `projects.example.md` with your own project blocks — the fan-out scales to however many you list. Each block's "Signal that matters" line is what its sub-agent filters on, so make it specific. Swap the output shape if your downstream (a notification, a routed message, a digest) wants something other than the recommended relevance artifact.
+Replace `projects.example.md` with your own project blocks. The fan-out scales to however many you list. Each block's "Signal that matters" line is what its sub-agent filters on, so make it specific. Swap the output shape if your downstream (a notification, a routed message, a digest) wants something other than the recommended relevance artifact.

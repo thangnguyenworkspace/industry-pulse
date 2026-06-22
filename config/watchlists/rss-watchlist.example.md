@@ -21,16 +21,16 @@ Curated RSS/Atom/RDF feeds whose recent items the Pulse pipeline monitors on dem
 
 ### 2.1 Authority
 
-- `practitioner` — deep individual expertise; voice of one person.
-- `executive` — leader of a recognized organization.
-- `institutional` — systemic gravity beyond a single company.
+- `practitioner`, deep individual expertise; voice of one person.
+- `executive`, leader of a recognized organization.
+- `institutional`, systemic gravity beyond a single company.
 
 Synthesis weight gradient: `institutional > executive > practitioner`. Pick the value that fits the source's actual reach, independent of personal affection.
 
 ### 2.2 Specialty
 
 - One sentence, ~12 words target. Focus area + perspective.
-- Skip biography, role title, employer — Entity Type and URL already carry those.
+- Skip biography, role title, employer, Entity Type and URL already carry those.
 
 ### 2.3 Entry Discipline
 
@@ -46,8 +46,8 @@ Synthesis weight gradient: `institutional > executive > practitioner`. Pick the 
 
 ### 2.5 Source-Type Conventions
 
-- Entity Type ∈ {Deep-Content Feed, News-Firehose Feed} carries the feed's **dispatch class**, not an entity kind. `Deep-Content Feed` = low-count / high-token (full bodies or show-notes); `News-Firehose Feed` = high-count / low-token (headlines/excerpts). `run-pulse`'s volume auto-scaler reads this column to bin feeds — the two classes load on different axes and never share a bin; news firehoses sub-shard by token estimate to a per-worker budget.
-- URL is the raw feed URL (RSS, Atom, or RDF — `research-crawl-rss` parses all three via feedparser). Store the canonical feed URL; some hosts 308-normalize a trailing slash — store the normalized no-slash form.
+- Entity Type ∈ {Deep-Content Feed, News-Firehose Feed} carries the feed's **dispatch class**, not an entity kind. `Deep-Content Feed` = low-count / high-token (full bodies or show-notes); `News-Firehose Feed` = high-count / low-token (headlines/excerpts). `run-pulse`'s volume auto-scaler reads this column to bin feeds, the two classes load on different axes and never share a bin; news firehoses sub-shard by token estimate to a per-worker budget.
+- URL is the raw feed URL (RSS, Atom, or RDF, `research-crawl-rss` parses all three via feedparser). Store the canonical feed URL; some hosts 308-normalize a trailing slash, store the normalized no-slash form.
 - No domain column. Domain is assigned at L1 classify-time against your `config/profile.md` §3.0, uniform with the LinkedIn / email / X watchlists. A single feed's items can span domains, so per-item classification beats a per-feed label.
 - Cross-source signal is owned by the brief-assembly layer: L1 workers preserve each source's framing without deduping; assembly reads repetition across sources as salience and surfaces how framings diverge. Overlapping firehose coverage is signal, not noise to collapse.
 - Bot-gating is runtime/IP-specific; `research-crawl-rss` sends a browser User-Agent by default and classifies any 403 as `cloudflare-waf` (UA-defeatable) vs `cloudflare-js-challenge` (route elsewhere).
@@ -57,5 +57,5 @@ Synthesis weight gradient: `institutional > executive > practitioner`. Pick the 
 | # | Name | Entity Type | URL | Specialty | Authority | Notes |
 |---|------|-------------|-----|-----------|-----------|-------|
 | 1 | Hacker News Front Page | News-Firehose Feed | https://hnrss.org/frontpage | Front-page startup/tech community signal across engineering and industry | institutional | Title + link |
-| 2 | TechCrunch | News-Firehose Feed | https://techcrunch.com/feed/ | Startup funding, product launches, and tech-industry news | executive | — |
+| 2 | TechCrunch | News-Firehose Feed | https://techcrunch.com/feed/ | Startup funding, product launches, and tech-industry news | executive |n/a |
 | 3 | Stratechery (free) | Deep-Content Feed | https://stratechery.com/feed/ | Tech strategy and business-model analysis of platforms and incumbents | practitioner | Free tier only |

@@ -21,16 +21,16 @@ Curated list of email senders whose new messages the Pulse pipeline monitors on 
 
 ### 2.1 Authority
 
-- `practitioner` — deep individual expertise; voice of one person.
-- `executive` — leader of a recognized organization.
-- `institutional` — systemic gravity beyond a single company.
+- `practitioner`, deep individual expertise; voice of one person.
+- `executive`, leader of a recognized organization.
+- `institutional`, systemic gravity beyond a single company.
 
 Synthesis weight gradient: `institutional > executive > practitioner`. Pick the value that fits the source's actual reach, independent of personal affection.
 
 ### 2.2 Specialty
 
 - One sentence, ~12 words target. Focus area + perspective.
-- Skip biography, role title, employer — Entity Type and URL already carry those.
+- Skip biography, role title, employer, Entity Type and URL already carry those.
 
 ### 2.3 Entry Discipline
 
@@ -46,7 +46,7 @@ Synthesis weight gradient: `institutional > executive > practitioner`. Pick the 
 
 ### 2.5 Source-Type Conventions
 
-- Entity Type is always `Sender`. Email watchlists have one entity classification — the inbox-sender identity.
+- Entity Type is always `Sender`. Email watchlists have one entity classification, the inbox-sender identity.
 - URL is the literal email address (e.g., `newsletter@example.com`). Use the canonical sending address, not a reply-to alias.
 - Prefer the human-readable sender label or institution name in the Name column, not the email handle (e.g., `Market News Daily` over `markets@example.com`).
 - One entry per sending address. If an institution sends from multiple addresses, list each as a separate entry.
@@ -55,5 +55,5 @@ Synthesis weight gradient: `institutional > executive > practitioner`. Pick the 
 
 | # | Name | Entity Type | URL | Specialty | Authority | Notes |
 |---|------|-------------|-----|-----------|-----------|-------|
-| 1 | Example AI Newsletter | Sender | ai-news@example.com | Curated roundup of AI research, model releases, and tooling launches | institutional | Placeholder — replace with a real sender address |
-| 2 | Example Growth Newsletter | Sender | growth@example.com | SaaS marketing, growth, and positioning playbooks for founders and operators | practitioner | Placeholder — replace with a real sender address |
+| 1 | Example AI Newsletter | Sender | ai-news@example.com | Curated roundup of AI research, model releases, and tooling launches | institutional | Placeholder, replace with a real sender address |
+| 2 | Example Growth Newsletter | Sender | growth@example.com | SaaS marketing, growth, and positioning playbooks for founders and operators | practitioner | Placeholder, replace with a real sender address |
