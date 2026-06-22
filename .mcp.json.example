@@ -1,0 +1,14 @@
+{
+  "_comment": "Copy to .mcp.json and configure for your environment. .mcp.json is gitignored. This is an illustrative shape only — see docs/setup.md for exact, current MCP server setup. Omit any lane's server if you don't run that lane (RSS needs none).",
+  "mcpServers": {
+    "apify": {
+      "_comment": "Required for the LinkedIn + X lanes. Provides the mcp__apify__* tools the crawl leaves call.",
+      "command": "npx",
+      "args": ["-y", "@apify/actors-mcp-server"],
+      "env": { "APIFY_TOKEN": "${APIFY_TOKEN}" }
+    },
+    "gmail": {
+      "_comment": "Optional — required only for the email lane. Configure a Gmail MCP server per your provider; see docs/setup.md."
+    }
+  }
+}
