@@ -154,6 +154,17 @@ A few choices shaped everything downstream. Each one gave something up.
 | **Parallel crawl and classify, single-thread synthesis** | Reading parallelizes cleanly; judgment does not. Independent workers each see one slice without colliding, but the brief needs one mind holding all of it at once. | Synthesis is a serial step. That is the cost of a brief that reads as one coherent view instead of stitched fragments. |
 | **Plain Claude Code skills, no agent framework** | It is a deterministic workflow with model calls at the edges. Orchestrating in code keeps cost and behavior easy to reason about. | Tied to the Claude Code harness rather than portable across runtimes. |
 
+## 🔐 What this touches
+
+Before you point this at your accounts, here is exactly what it reads and where that data goes. The short version: everything runs on your machine, and the only data that leaves it goes to the scraping service you choose to turn on.
+
+- **Your Gmail, read locally.** The email lane reads your inbox through a Gmail MCP server you connect on your own machine. Messages are pulled locally, classified locally, and folded into the brief. Nothing from your mail is uploaded anywhere by this tool.
+- **The paid lanes go through Apify.** LinkedIn and X are fetched through third-party Apify actors. Your watchlist URLs and handles, plus your Apify token, are sent to Apify so it can return the public posts it scrapes. That is the one external service in the loop. Run neither paid lane and nothing leaves your machine at all.
+- **Output stays on disk.** Raw crawl files, tagged intermediates, and the finished briefs are written under `output/`, which is gitignored. The brief is neutral by construction, naming no holdings and no projects, so even the finished artifact carries nothing private.
+- **Secrets live in gitignored files.** Your `APIFY_TOKEN` sits in `.env` and your MCP servers in `.mcp.json`, both copied from `.example` templates and both gitignored. They are read from nowhere else and never committed.
+
+There is no formal `SECURITY.md` here, on purpose. This is a snapshot of a tool you run yourself, not a hosted service holding other people's data, so a vulnerability-disclosure channel would be cargo-cult. This note answers the question that actually matters: what it reads, and where that goes.
+
 ## 💸 Cost and limitations
 
 Only two lanes cost money. RSS and email are free; LinkedIn and X run through paid Apify actors. Two rules hold spend down: every crawl carries a per-source cap (`--linkedin-max-posts`, `--x-max-per-handle`), and the run prints a cost estimate and waits for your approval before any paid call. The free lanes have already run by then, so you only ever approve the paid portion.
