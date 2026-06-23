@@ -1,0 +1,4 @@
+# Runtime dependencies for scripts/rss-ingest.py (the only standalone-executable code).
+# Everything else in the pipeline is stdlib or Claude Code Agent Skills.
+# Pinned for reproducible clean-clone builds (see tests/ + .github/workflows/ci.yml).
+feedparser==6.0.12
