@@ -1,6 +1,8 @@
 # Secrets & local config — never commit the real ones
 .env
 .mcp.json
+config/profile.md
+config/watchlists/*-watchlist.md
 
 # Pulse run outputs (regenerable per run)
 output/*

@@ -32,16 +32,16 @@ The full pipeline runs inside Claude Code, where the skills are slash commands. 
 
 ```
 cp .env.example .env                 # add APIFY_TOKEN (needed only for the paid lanes)
-cp .mcp.json.example .mcp.json       # Apify, plus Gmail for the email lane
-cp config/profile.example.md config/profile.md
-for f in config/watchlists/*.example.md; do cp "$f" "${f%.example.md}.md"; done
+cp .mcp.json.example .mcp.json       # configure Apify, plus Gmail for the email lane
+cp config/profile.example.md config/profile.md                 # make the lens yours
+for f in config/watchlists/*.example.md; do cp "$f" "${f%.example.md}.md"; done   # then curate
 ```
 
 Then open the repo in Claude Code and run:
 
 ```
-/run-pulse            # 1-day window across every non-empty lane
-/run-pulse --days=7   # wider weekly compression run
+/run-pulse           # 1-day window across every non-empty lane
+/run-pulse --days=7  # a wider weekly compression run
 ```
 
 The brief lands in `output/reports/pulse-report-<date>/`. Full setup, including the MCP servers, is in `docs/setup.md`.

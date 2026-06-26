@@ -1,0 +1,40 @@
+{
+  "manifestVersion": "1.0",
+  "name": "industry-pulse",
+  "description": "Watchlist-driven intelligence pipeline crawling LinkedIn, X, RSS, and email into one neutral signals brief.",
+  "maturity": "snapshot",
+  "artifactType": "app",
+  "version": "snapshot-2026-06-26",
+  "license": "MIT",
+  "entryPoints": {
+    "human": "README.md",
+    "agent": "AGENTS.md"
+  },
+  "boundaries": {
+    "always": [
+      "docs/**",
+      "examples/**",
+      "config/*.example.md",
+      "config/watchlists/*.example.md"
+    ],
+    "askFirst": [
+      "scripts/rss-ingest.py",
+      ".claude/skills/**",
+      "schemas/**"
+    ],
+    "never": [
+      ".env",
+      ".mcp.json",
+      "config/profile.md",
+      "config/watchlists/*-watchlist.md",
+      "output/**"
+    ]
+  },
+  "provenance": {
+    "builtWith": "Claude Code",
+    "generatedFiles": [
+      "CLAUDE.md — imports AGENTS.md; do not edit directly"
+    ],
+    "snapshotDate": "2026-06-26"
+  }
+}

@@ -88,9 +88,8 @@ supply independence. The split is the story, not the announcements.
 git clone <your-fork-url> industry-pulse
 cd industry-pulse
 
-cp .env.example .env                 # add your APIFY_TOKEN
-cp .mcp.json.example .mcp.json        # configure Apify (+ Gmail if you want email)
-
+cp .env.example .env                 # add APIFY_TOKEN (needed only for the paid lanes)
+cp .mcp.json.example .mcp.json       # configure Apify, plus Gmail for the email lane
 cp config/profile.example.md config/profile.md                 # make the lens yours
 for f in config/watchlists/*.example.md; do cp "$f" "${f%.example.md}.md"; done   # then curate
 ```
@@ -124,13 +123,24 @@ Pulse is path-driven. Every file it reads or writes is a path declared in the `#
 
 ```
 .
-├── .claude/skills/   # The pipeline: run-pulse + four crawl leaves (Agent Skills)
-├── config/           # Your lens (profile) and per-lane watchlists
-├── schemas/          # The markdown contracts every file conforms to
-├── docs/             # Architecture, setup, and extension guides
-├── examples/         # Two worked relevance implementations at the seam
-├── scripts/          # The RSS ingest helper (feedparser)
-└── output/           # Generated briefs and intermediates (gitignored)
+├── .claude/skills/      # The pipeline: run-pulse + four crawl leaves (Agent Skills)
+├── .github/workflows/   # CI: install pinned deps and run the smoke test on push
+├── config/              # Your lens (profile) + per-lane watchlists; copy from the *.example files
+├── docs/                # Architecture, setup, and extension guides
+├── examples/            # Two worked relevance implementations at the seam
+├── output/              # Generated briefs and intermediates (gitignored)
+├── schemas/             # The markdown contracts every file conforms to
+├── scripts/             # The RSS ingest helper (feedparser)
+├── tests/               # Offline smoke test + fixture feed for the RSS helper
+├── .env.example         # Template for .env (APIFY_TOKEN); real file gitignored
+├── .gitignore           # Excludes secrets, real config, and generated output
+├── .mcp.json.example    # Template for .mcp.json (Apify, Gmail); real file gitignored
+├── AGENTS.md            # Agent entry point; the single source of agent instructions
+├── CLAUDE.md            # Imports AGENTS.md (Claude Code); not a separate copy
+├── LICENSE              # MIT
+├── README.md            # This file, the human entry point
+├── repo-manifest.json   # Machine-readable root manifest (identity, maturity, boundaries, provenance)
+└── requirements.txt     # Pinned Python deps for the RSS helper (feedparser==6.0.12)
 ```
 
 ## 🧩 The relevance seam
