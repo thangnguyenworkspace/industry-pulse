@@ -33,7 +33,7 @@
   "provenance": {
     "builtWith": "Claude Code",
     "generatedFiles": [
-      "CLAUDE.md — imports AGENTS.md; do not edit directly"
+      "CLAUDE.md: imports AGENTS.md; do not edit directly"
     ],
     "snapshotDate": "2026-06-26"
   }

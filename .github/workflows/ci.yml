@@ -2,7 +2,7 @@ name: CI
 
 # Runnable-verifiability proof for the one standalone-executable path (scripts/rss-ingest.py).
 # A clean checkout installs pinned deps and runs the offline smoke test. The wider pipeline
-# (Claude Code Agent Skills) is harness-bound and out of scope here — a stated limitation, by design.
+# (Claude Code Agent Skills) is harness-bound and out of scope here. A stated limitation, by design.
 
 on:
   push:

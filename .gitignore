@@ -1,4 +1,4 @@
-# Secrets & local config — never commit the real ones
+# Secrets & local config. Never commit the real ones.
 .env
 .mcp.json
 config/profile.md
