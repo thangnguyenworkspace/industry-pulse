@@ -1,3 +1,11 @@
+---
+audience: human
+summary: Clean-clone-to-first-brief setup (prerequisites, secrets, MCP servers, profile, watchlists) for when you are onboarding a fresh clone.
+tier: 1
+status: stable
+last_updated: 2026-06-22
+---
+
 # Setup
 
 From a clean clone to a first brief. Most of this is one-time.

@@ -1,3 +1,11 @@
+---
+audience: both
+summary: Full run mechanics (three-layer pipeline, auto-scaler, cost discipline, context isolation) for when you need what is behind a run.
+tier: 1
+status: stable
+last_updated: 2026-06-22
+---
+
 # Architecture
 
 Pulse is a three-layer pipeline. Raw crawling, classification, and synthesis are separated so the heavy, parallelizable reading never touches the orchestrating thread, and so each layer has one job.

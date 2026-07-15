@@ -1,30 +1,28 @@
 # AGENTS.md
 
+Entry point for an agent operating or ingesting this repository. This is the single canonical agent-instruction file; [CLAUDE.md](CLAUDE.md) imports it, so the two cannot drift. Edit this file, never CLAUDE.md. The human entry point is [README.md](README.md).
+
 ## What this is
 
-industry-pulse is a watchlist-driven intelligence pipeline you run on demand. It crawls LinkedIn, X, RSS, and email, classifies and domain-tags every post in parallel against a profile you define, and writes one neutral, cited signals brief per run. The brief names nothing personal, so it stays forwardable; the relevance-and-delivery layer that scores a brief against your own context attaches at a documented seam and is not part of this repo. The pipeline is built as Claude Code Agent Skills plus one standalone Python helper. This file orients an agent reading the repo cold: the project produces a brief, it is not a hosted service.
+industry-pulse is a watchlist-driven intelligence pipeline you run on demand. It crawls LinkedIn, X, RSS, and email, classifies and domain-tags every post in parallel against a profile you define, and writes one neutral, cited signals brief per run. The brief names nothing personal, so it stays forwardable; the relevance-and-delivery layer that scores a brief against your own context attaches at a documented seam and is not part of this repo. It is a frozen snapshot: the agent's job here is orientation, not modification.
 
 ## Architecture
 
-Three layers, kept apart so the heavy reading never lands in the thread doing synthesis:
-
-- **Crawl leaves** (`.claude/skills/research-crawl-*`): four pure-primitive crawlers, one per source (LinkedIn, X, RSS, email). RSS runs free up front to size the run; the paid lanes (LinkedIn and X, via Apify) run only after a cost gate you approve.
-- **Classify and tag**: a fan-out of parallel workers buckets each item (authored, reposted, mentioned, or dropped) and domain-tags it against the profile, keeping each source's own framing intact.
-- **Synthesis**: the main thread reads every tagged file and writes one neutral signals brief, reading repetition across sources as salience and disagreement as insight.
-
-The reusable core ends at the brief. The private relevance-and-delivery layer attaches across "the seam" and does not ship; two worked stand-ins live in `examples/`. Full mechanics, including the volume-aware auto-scaler and the context-isolation discipline, are in `docs/architecture.md`.
+Three layers kept apart so the heavy reading never lands in the thread doing synthesis: pure-primitive crawl leaves, a parallel classify-and-tag fan-out, and a single-threaded synthesis pass that writes the brief. The full design, including the volume-aware auto-scaler and the context-isolation discipline, is the canonical statement in [docs/architecture.md](docs/architecture.md).
 
 ## How to navigate
 
-Read `README.md` first, then `docs/architecture.md`, then `.claude/skills/run-pulse/SKILL.md` (the orchestrator). The layout:
-
-- `.claude/skills/`: the pipeline itself. `run-pulse/` orchestrates; `research-crawl-{linkedin-posts,x-posts,rss,email}/` are the four crawl leaves. Each is a `SKILL.md` that reads top to bottom with every path and decision spelled out.
-- `config/`: the lens you supply. `profile.example.md` (north star, domains, filters) and `watchlists/*-watchlist.example.md` (curated sources per lane).
-- `schemas/`: the markdown contracts for every file the pipeline reads or writes (`schema-pulse-profile`, `-watchlist`, `-tagged-output`, `-report`). Each carries `id`, `version`, `governs`, and `applies_to`.
-- `docs/`: `architecture.md`, `setup.md` (clean clone to first brief), `extending.md` (the seam, delivery adapters, adding a lane).
-- `examples/`: two self-contained relevance implementations at the seam (`portfolio-relevance/`, `project-relevance/`). The core never imports them.
-- `scripts/rss-ingest.py`: the single standalone executable, the feedparser engine the RSS leaf calls.
-- `output/`: generated briefs and intermediates. Gitignored and regenerable per run.
+| Path | What it is | Read it when |
+|---|---|---|
+| `README.md` | Human entry point: thesis, quickstart, design decisions | Orienting to what the project is and how to run it |
+| `docs/architecture.md` | The three layers, the auto-scaler, cost discipline, context isolation | You need the full mechanics behind a run |
+| `.claude/skills/run-pulse/SKILL.md` | The orchestrator, top-to-bottom with every path and decision spelled out | Tracing or changing how a run is sequenced |
+| `.claude/skills/research-crawl-*/SKILL.md` | The four crawl leaves (LinkedIn, X, RSS, email), one pure primitive each | Working on a single source lane |
+| `config/` | The lens you supply: `profile.example.md` + `watchlists/*.example.md` | Setting up or changing what the pipeline reads through |
+| `schemas/` | Markdown contracts for every file the pipeline reads or writes | Checking or changing a file's shape |
+| `docs/setup.md` | Clean-clone-to-first-brief setup, MCP servers included | Onboarding a fresh clone |
+| `docs/extending.md` | The relevance seam, delivery adapters, adding a source lane | Building your own relevance or delivery layer |
+| `scripts/rss-ingest.py` | The one standalone executable: the feedparser engine the RSS leaf calls | Running or debugging the RSS lane outside the harness |
 
 ## Run it
 
@@ -52,6 +50,16 @@ One component runs standalone, no harness, anywhere Python 3 with `feedparser` i
 python3 scripts/rss-ingest.py --url https://news.ycombinator.com/rss --name hackernews --days 2 --out-dir ./out
 ```
 
+## Boundaries
+
+| Scope | Paths |
+|---|---|
+| Safe to modify | `docs/**`, `examples/**`, `config/*.example.md`, `config/watchlists/*.example.md` |
+| Ask first | `scripts/rss-ingest.py`, `.claude/skills/**`, `schemas/**` |
+| Never touch | `.env`, `.mcp.json`, `config/profile.md`, `config/watchlists/*-watchlist.md`, `output/**` |
+
+The values above are rendered from `repo-manifest.json` `boundaries`; the manifest owns them. The never-touch paths are the private lens and secrets that are gitignored and never shipped.
+
 ## Conventions
 
 Rules that hold across the repo, stated so they are checkable:
@@ -66,6 +74,7 @@ Rules that hold across the repo, stated so they are checkable:
 ## Status & provenance
 
 - **Maturity:** stable snapshot. A point-in-time release of a system run privately, complete as shipped. Not actively maintained; issues and pull requests are not watched.
-- **Build provenance:** built with Claude Code. MIT licensed.
+- **Artifact type:** `app`, not `skill-package`. The `.claude/skills/` bundle is this app's implementation, run only inside its own pipeline; it is not published as versioned, independently-pinnable capabilities with trigger evals, so the skill-package obligations (a capabilities index, per-skill evals) do not apply. The type is a deliberate choice, not an omission.
+- **Build provenance:** built with Claude Code. MIT licensed. `CLAUDE.md` is an import shim over this file, not separately maintained content.
 - **Deliberately withheld:** the private relevance-and-delivery layer (how briefs get scored and routed) and the real profile and watchlists. Only `*.example` configs ship. This is by design: the reusable core is the published part, the personal layer is not.
 - **Known limitation:** the pipeline executes only inside Claude Code, since the skills are slash commands. On another harness the `SKILL.md` files read as prose but do not run. `scripts/rss-ingest.py` is the one piece that runs anywhere Python does.

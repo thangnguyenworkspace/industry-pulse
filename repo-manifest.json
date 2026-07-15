@@ -32,8 +32,9 @@
   },
   "provenance": {
     "builtWith": "Claude Code",
-    "generatedFiles": [
-      "CLAUDE.md: imports AGENTS.md; do not edit directly"
+    "generatedFiles": [],
+    "importedFiles": [
+      "CLAUDE.md imports AGENTS.md via @AGENTS.md; an import shim, not generated. Edit AGENTS.md."
     ],
     "snapshotDate": "2026-06-26"
   }

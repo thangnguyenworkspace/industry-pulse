@@ -1,3 +1,11 @@
+---
+audience: both
+summary: The three extension points (relevance seam, delivery, a new source lane) for when you build your own layer on the brief.
+tier: 1
+status: stable
+last_updated: 2026-06-22
+---
+
 # Extending
 
 The core stops at the neutral signals brief. Everything that makes the output *yours* is an extension point. This guide covers the three most common: the relevance seam, delivery, and adding a new source lane.
