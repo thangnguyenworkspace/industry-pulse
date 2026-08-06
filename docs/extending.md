@@ -24,7 +24,7 @@ brief  +  your context object   →   your relevance logic   →   a relevance a
 - **PROCESS**: your relevance logic. Two patterns, picked by fan-out:
   - **Sub-agent per context** when you check several contexts in parallel. Each agent reads the brief plus one context and returns that context's take in its own isolated window. This is the same context-isolation lever the core uses: keep the per-context reading out of your orchestrating thread. See [`examples/project-relevance/`](../examples/project-relevance/).
   - **Inline** when you have one or two contexts. Read the brief plus the context in the main workflow and write the take directly. See [`examples/portfolio-relevance/`](../examples/portfolio-relevance/).
-- **OUT**: a relevance artifact per context. The repo ships a recommended shape (`schema-pulse-project-relevance`: a few second-order relevance items, each carrying its source permalink, plus one suggested action) as a *shape, not a mandate*. Emit whatever your downstream needs.
+- **OUT**: a relevance artifact per context. A recommended shape is spelled out in [The recommended relevance artifact](#the-recommended-relevance-artifact) below (a few second-order relevance items, each carrying its source permalink, plus one suggested action), offered as a *shape, not a mandate*. Emit whatever your downstream needs.
 
 The two worked examples in [`examples/`](../examples/) are self-contained and swappable. The core never imports them, so delete or replace them freely.
 

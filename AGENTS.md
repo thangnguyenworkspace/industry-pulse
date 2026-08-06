@@ -26,7 +26,7 @@ Three layers kept apart so the heavy reading never lands in the thread doing syn
 
 ## Run it
 
-The full pipeline runs inside Claude Code, where the skills are slash commands. First-run setup copies the example config and adds one secret:
+The full pipeline runs inside Claude Code, or another agent harness that runs `.claude/skills/` Agent Skills and supports MCP. First-run setup copies the example config and adds one secret:
 
 ```
 cp .env.example .env                 # add APIFY_TOKEN (needed only for the paid lanes)
@@ -77,4 +77,4 @@ Rules that hold across the repo, stated so they are checkable:
 - **Artifact type:** `app`, not `skill-package`. The `.claude/skills/` bundle is this app's implementation, run only inside its own pipeline; it is not published as versioned, independently-pinnable capabilities with trigger evals, so the skill-package obligations (a capabilities index, per-skill evals) do not apply. The type is a deliberate choice, not an omission.
 - **Build provenance:** built with Claude Code. MIT licensed. `CLAUDE.md` is an import shim over this file, not separately maintained content.
 - **Deliberately withheld:** the private relevance-and-delivery layer (how briefs get scored and routed) and the real profile and watchlists. Only `*.example` configs ship. This is by design: the reusable core is the published part, the personal layer is not.
-- **Known limitation:** the pipeline executes only inside Claude Code, since the skills are slash commands. On another harness the `SKILL.md` files read as prose but do not run. `scripts/rss-ingest.py` is the one piece that runs anywhere Python does.
+- **Known limitation:** the pipeline needs a harness that runs Agent Skills (`.claude/skills/<name>/SKILL.md`) and supports MCP, and it was exercised only in Claude Code. On a harness without Agent Skills support the `SKILL.md` files read as prose but do not run. `scripts/rss-ingest.py` is the one piece that runs anywhere Python does.
